@@ -13,7 +13,7 @@ import {
   Viro3DObject,
   ViroAmbientLight,
   ViroSpotLight,
-  ViroARPlaneSelector
+  ViroNode
 } from 'react-viro';
 
 export default class HelloWorldSceneAR extends Component {
@@ -38,7 +38,7 @@ export default class HelloWorldSceneAR extends Component {
         <ViroAmbientLight color={"#aaaaaa"} />
         <ViroSpotLight innerAngle={5} outerAngle={90} direction={[0,-1,-.2]}
           position={[0, 3, 1]} color="#ffffff" castsShadow={true} />
-        <ViroARPlaneSelector>
+        <ViroNode position={[0,-1,0]} dragType="FixedToWorld" onDrag={()=>{}} >
           <Viro3DObject
             source={require('./res/emoji_smile/emoji_smile.vrx')}
             resources={[require('./res/emoji_smile/emoji_smile_diffuse.png'),
@@ -47,7 +47,7 @@ export default class HelloWorldSceneAR extends Component {
             position={[0, .5, 0]}
             scale={[.2, .2, .2]}
             type="VRX" />
-        </ViroARPlaneSelector>
+        </ViroNode>
       </ViroARScene>
     );
   }
