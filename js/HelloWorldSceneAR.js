@@ -9,7 +9,8 @@ import {
   ViroConstants,
   ViroText,
   ViroARImageMarker,
-  ViroARTrackingTargets
+  ViroARTrackingTargets,
+  ViroImage
 } from 'react-viro';
 
 export default class HelloWorldSceneAR extends Component {
@@ -30,6 +31,14 @@ export default class HelloWorldSceneAR extends Component {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
         <ViroARImageMarker target={"cheez"}>
+          <ViroImage
+            width={1}
+            height={1}
+            position={[-0.08, 0, -.16]}
+            rotation={[-90, 0, 0]}
+            scale = {[.05, .05, .05]}
+            source={require("./res/profile.png")}
+          />
           <ViroText 
             text={this.state.text} 
             scale={[.1, .1, .1]} 
@@ -56,7 +65,7 @@ var styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: 'Arial',
     fontSize: 30,
-    color: '#000000',
+    color: '#f08633',
     textAlignVertical: 'center',
     textAlign: 'center',
   },
