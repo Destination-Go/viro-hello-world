@@ -2,19 +2,14 @@
 
 import React, { Component } from 'react';
 
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import {
   ViroARScene,
-  ViroText,
   ViroConstants,
-  ViroBox,
-  ViroMaterials,
-  Viro3DObject,
-  ViroAmbientLight,
-  ViroSpotLight,
-  ViroNode,
-  ViroAnimations
+  ViroText,
+  ViroARImageMarker,
+  ViroARTrackingTargets
 } from 'react-viro';
 
 export default class HelloWorldSceneAR extends Component {
@@ -34,21 +29,14 @@ export default class HelloWorldSceneAR extends Component {
   render() {
     return (
       <ViroARScene onTrackingUpdated={this._onInitialized} >
-        <ViroText text={this.state.text} scale={[.5, .5, .5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
-        <ViroBox position={[0, -.5, -1]} scale={[.3, .3, .1]} materials={["grid"]} animation={{name: "rotate", run: true, loop: true}}/>
-        <ViroAmbientLight color={"#aaaaaa"} />
-        <ViroSpotLight innerAngle={5} outerAngle={90} direction={[0,-1,-.2]}
-          position={[0, 3, 1]} color="#ffffff" castsShadow={true} />
-        <ViroNode position={[0,-1,0]} dragType="FixedToWorld" onDrag={()=>{}} >
-          <Viro3DObject
-            source={require('./res/emoji_smile/emoji_smile.vrx')}
-            resources={[require('./res/emoji_smile/emoji_smile_diffuse.png'),
-                require('./res/emoji_smile/emoji_smile_normal.png'),
-                require('./res/emoji_smile/emoji_smile_specular.png')]}
-            position={[0, .5, 0]}
-            scale={[.2, .2, .2]}
-            type="VRX" />
-        </ViroNode>
+        <ViroARImageMarker target={"cheez"}>
+          <ViroText 
+            text={this.state.text} 
+            scale={[.1, .1, .1]} 
+            position={[0, 0, -.15]} 
+            rotation={[-90, 0, 0]}
+            style={styles.helloWorldTextStyle} />
+        </ViroARImageMarker>
       </ViroARScene>
     );
   }
@@ -56,7 +44,7 @@ export default class HelloWorldSceneAR extends Component {
   _onInitialized(state, reason) {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
-        text : "Hello World!"
+        text : "Clue Found!"
       });
     } else if (state == ViroConstants.TRACKING_NONE) {
       // Handle loss of tracking
@@ -68,25 +56,18 @@ var styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: 'Arial',
     fontSize: 30,
-    color: '#ffffff',
+    color: '#000000',
     textAlignVertical: 'center',
-    textAlign: 'center',  
+    textAlign: 'center',
   },
 });
 
-ViroMaterials.createMaterials({
-  grid: {
-    diffuseTexture: require('./res/grid_bg.jpg'),
-  },
-});
-
-ViroAnimations.registerAnimations({
-  rotate: {
-    properties: {
-      rotateY: "+=90"
-    },
-    duration: 250, //.25 seconds
-  },
+ViroARTrackingTargets.createTargets({
+  "cheez" : {
+    source : require('./res/cheez.jpg'),
+    orientation : "Up",
+    physicalWidth : 0.1524 // real world width in meters
+  }
 });
 
 module.exports = HelloWorldSceneAR;
