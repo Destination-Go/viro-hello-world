@@ -28,13 +28,21 @@ export default class HelloWorldSceneAR extends Component {
   }
 
   render() {
-    return (
-      <ViroARScene onTrackingUpdated={this._onInitialized} >
-        <ViroARImageMarker target={"cheez"}>
+    const images = [
+      "bar_sign", 
+      "cotton_candy", 
+      "jerky_sack", 
+      "jerky_sign", 
+      "llama", 
+      "mantis_sign"
+    ];
+    
+    const ARImageMarkers = images.map(img => 
+        <ViroARImageMarker target={`${img}`} key={`${img}`}>
           <ViroImage
             width={1}
             height={1}
-            position={[-0.08, 0, -.16]}
+            position={[-0.08, 0, -.32]}
             rotation={[-90, 0, 0]}
             scale = {[.05, .05, .05]}
             source={require("./res/profile.png")}
@@ -42,10 +50,15 @@ export default class HelloWorldSceneAR extends Component {
           <ViroText 
             text={this.state.text} 
             scale={[.1, .1, .1]} 
-            position={[0, 0, -.15]} 
+            position={[0, 0, -.30]} 
             rotation={[-90, 0, 0]}
             style={styles.helloWorldTextStyle} />
         </ViroARImageMarker>
+      )
+      
+    return (
+      <ViroARScene onTrackingUpdated={this._onInitialized} >
+        {ARImageMarkers}
       </ViroARScene>
     );
   }
@@ -76,6 +89,36 @@ ViroARTrackingTargets.createTargets({
     source : require('./res/cheez.jpg'),
     orientation : "Up",
     physicalWidth : 0.1524 // real world width in meters
+  },
+  "bar_sign" : {
+    source : require('./res/container_park/bar_sign.png'),
+    orientation : "Up",
+    physicalWidth : 0.6223
+  },
+  "cotton_candy" : {
+    source : require('./res/container_park/cotton_candy.png'),
+    orientation : "Up",
+    physicalWidth : 0.5715
+  },
+  "jerky_sack" : {
+    source : require('./res/container_park/jerky_sack.png'),
+    orientation : "Up",
+    physicalWidth : 0.3429
+  },
+  "jerky_sign" : {
+    source : require('./res/container_park/jerky_sign.png'),
+    orientation : "Up",
+    physicalWidth : 0.5715
+  },
+  "llama" : {
+    source : require('./res/container_park/llama.png'),
+    orientation : "Up",
+    physicalWidth : 0.5588
+  },
+  "mantis_sign" : {
+    source : require('./res/container_park/mantis_sign.png'),
+    orientation : "Up",
+    physicalWidth : 0.4953
   }
 });
 
